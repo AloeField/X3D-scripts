@@ -1,0 +1,21 @@
+<?xml version ="1.0" encoding ="UTF-8"?>
+<X3D profile = 'Immersive'>
+    <Scene>
+        <!-- ejes x: horizontal, y: vertical, z = profundidad -->
+        <Transform translation = '-15 0 15' scale = '4 4 4'> <!--Traslación que lleva texto al frente, centrado y scale aumenta el tamaño tantas pulgadas-->
+            <Shape>
+                <Appearance>
+                    <Material> </Material>
+                </Appearance>
+                <Text string = '"TRES EN RAYA"'> </Text>
+            </Shape>
+        </Transform>
+        <Shape>
+            <Appearance>
+                <Material> </Material>
+                <ImageTexture url = '"3enraya.png"'> </ImageTexture>
+            </Appearance>
+            <Box size = '30 0.5 30'> </Box> <!-- Lados 30m y grosor 0.5m, importante que sea así ya que los dos primeros con 30 sale ubicado erroneámente-->
+        </Shape>
+    </Scene>
+</X3D>

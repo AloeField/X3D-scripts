@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<X3D profile ='Immersive'>
+    <Scene>
+        <!--Movimiento de peón en ejes XY-->
+            <Transform rotation = '1 0 0 1.5708'> <!--se gira la escena completa +90º (radianes) respecto al eje de coordenadas-->
+                <PlaneSensor DEF ='MuevePeon'></PlaneSensor>
+                <Transform DEF ='Peon' rotation = '1 0 0 -1.5708'> <!--solamente el peón ahora -90º (radianes) respecto su origen-->
+                    <Inline url = '"11_PeonRojo.x3d"'></Inline>
+                </Transform>
+            </Transform>
+            <ROUTE fromNode = 'MuevePeon' fromField = 'translation_changed' toNode = 'Peon' toField = 'set_translation'></ROUTE> 
+    </Scene>
+    <!--Importantísimo revisar las rutas de dirección antes de hacer nada, ya que se llega a invocar a un script que no está en la carpeta deseada-->
+</X3D>

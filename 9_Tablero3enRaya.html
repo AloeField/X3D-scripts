@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style> <!-- Cambia el tamaño del canvas -->
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Punto de Vista (x: horizontal, y: vertical, z: profundidad, grados en radianes)-->
+                    <Viewpoint description='vista panoramica' orientation='1 0 0 -0.35' position='0 20 40'></Viewpoint>
+                    <!--La posición determina en números crecientes la ubicación de la figura en sí-->
+
+                    <!--Cambio de distribución (traslación lleva el texto delante y lo centra {xyz}, junto a scale que aumenta tamaño)-->
+                    <Inline url = '"X3D/9_3Tablero3enRaya.x3d"'> </Inline> <!-- Tablero 3 en raya (X3D) -->
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

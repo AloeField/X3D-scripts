@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <Shape>
+                        <Appearance>
+                        </Appearance>
+                        <Text string = '"Hola Mundo!"'></Text>
+                    </Shape>
+                    <Shape>
+                        <Appearance>
+                            <Material diffuseColor=' '></Material>
+                            <ImageTexture url = '"texturas/ojo.png"'> </ImageTexture>
+                        </Appearance>
+                        <Sphere radius = '1'></Sphere>
+                    </Shape>
+                    <Transform translation = '0 -1.25 0'>
+                    <Shape>
+                        <Appearance> <Material></Material></Appearance>
+                        <Box size = '5 0.5 5'></Box>
+                    </Shape>
+                    </Transform>
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

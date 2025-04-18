@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<X3D profile = 'Immersive'>
+    <Scene>
+        <Transform translation = '0 1.5 0'>
+            <Shape> <!--Esfera roja-->
+                <Appearance>
+                    <Material DEF = 'rojo' diffuseColor = '0 1 0'> </Material> <!-- Color rojo -->
+                </Appearance>
+                <Sphere radius = '1'> </Sphere> <!-- Esfera de radio 1 -->
+            </Shape>
+        </Transform>
+            <Shape> <!--Cono rojo-->
+                <Appearance>
+                    <Material USE = 'rojo'> </Material> <!-- Color rojo -->
+                </Appearance>
+                <Cone height = '2' bottomRadius = '1' bottom = 'true'></Cone> 
+            </Shape>
+    </Scene>
+</X3D>

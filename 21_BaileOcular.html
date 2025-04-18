@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <script src = "https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Ojo Saltarín: desplaza verticalmente 1m de distancia-->
+                    <Transform DEF ='saltarin' translation = '-8 0 0'>
+                        <Shape>
+                            <Appearance>
+                                <Material></Material>
+                                <ImageTexture url = '"texturas/ojo.png"'></ImageTexture> <!--Imagen del ojo-->
+                            </Appearance>
+                            <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                        </Shape>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval ='1.5' loop = 'true'></TimeSensor> <!--Intervalo de tiempo para el movimiento del ojo-->
+
+                    <PositionInterpolator DEF = 'Posicion'
+                        key = '        0      0.25    0.5     0.75      1'
+                        keyValue = '-8 0 0  -8 1 0  -8 0 0  -8 -1 0  -8 0 0'></PositionInterpolator>
+                    <!--Valores de posición del ojo en el eje Y, desplazamiento vertical, las coordenadas de X son clave si se piensa implementar el cambio-->
+
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'Posicion' toField = 'set_fraction'></ROUTE> 
+                    <!--Conexión entre el sensor de tiempo y el interpolador de posición-->
+                    <ROUTE fromNode = 'Posicion' fromField = 'value_changed' toNode = 'saltarin' toField = 'set_translation'></ROUTE> 
+                    <!--Conexión entre el interpolador de posición y el objeto que se mueve-->
+
+                    <!--Ojo Mirón: que gira sobre si mismo (360º)-->
+                    <Transform DEF ='miron' translation = '-4 0 0'> <!--ojo derecho--> 
+                        <Shape>
+                            <Appearance>
+                                <Material></Material>
+                                <ImageTexture url = '"texturas/ojo.png"'></ImageTexture> <!--Imagen del ojo-->
+                            </Appearance>
+                            <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                        </Shape>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval ='1.5' loop = 'true'></TimeSensor> <!--Intervalo de tiempo para el movimiento del ojo-->
+
+                    <OrientationInterpolator DEF = 'Rotacion'
+                        key = '        0         0.25          0.5          0.75        1'
+                        keyValue = '0 1 0 0  0 1 0 -1.57  0 1 0 3.1415  0 1 0 1.57  0 1 0 0'></OrientationInterpolator>
+                    <!--Valores de rotación del ojo, el eje Y es el eje de rotación, el ángulo es clave si se piensa implementar el cambio-->
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'Rotacion' toField = 'set_fraction'></ROUTE>
+                    <!--Conexión entre el sensor de tiempo y el interpolador de rotación-->
+                    <ROUTE fromNode = 'Rotacion' fromField = 'value_changed' toNode = 'miron' toField = 'set_rotation'></ROUTE>
+                    <!--Conexión entre el interpolador de rotación y el objeto que se mueve-->
+
+                    <!--Ojo Saltón: se vuelve más grande (1.5m) y más reducido (0.5m)-->
+                    <Transform DEF = 'salton'>
+                        <Shape>
+                            <Appearance>
+                                <Material></Material>
+                                <ImageTexture url = '"texturas/ojo.png"'></ImageTexture> <!--Imagen del ojo-->
+                            </Appearance>
+                            <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                        </Shape>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval = '1.5' loop = 'true'></TimeSensor>
+
+                    <PositionInterpolator DEF = 'Escalado'
+                        key = '          0        0.25      0.5       0.75        1'
+                        keyValue = '0.5 0.5 0.5  1 1 1  1.5 1.5 1.5  1 1 1  0.5 0.5 0.5'>
+                    </PositionInterpolator>
+
+                    <!--Bola de Colores-->
+                    <Transform DEF = 'colorete' translation = '4 0 0'>
+                        <Shape> 
+                            <Appearance>
+                                <Material DEF = 'color' diffuseColor = '1 0 0'></Material>
+                            </Appearance>
+                            <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                        </Shape>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval = '1.5' loop = 'true'></TimeSensor> <!--Sensor de tiempo para activar el cambio de color-->
+
+                    <ColorInterpolator DEF = 'coloring'
+                        key = '       0     0.25   0.5    0.75    1'
+                        keyValue = '1 0 0  1 1 0  0 1 0  1 1 0  1 0 0'> <!--va cambiando de colores, (rojo,amarillo,verde,amarillo,rojo)-->
+                    </ColorInterpolator>
+
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'coloring' toField = 'set_fraction'></ROUTE>
+                    <!--Conexión entre el sensor de tiempo y el interpolador de color-->
+                    <ROUTE fromNode = 'coloring' fromField = 'value_changed' toNode = 'color' toField = 'set_diffuseColor'></ROUTE>
+                    <!--Conexión entre el interpolador de color y el objeto que se mueve-->
+
+                    <!--Bola Transparente-->
+                    <Transform DEF = 'bola pequeña' translation = '3.5 0 2'>
+                        <Shape>
+                            <Appearance>
+                                <Material DEF = 'transparente' diffuseColor = '1 0 0'></Material> <!--Color transparente-->
+                            </Appearance>
+                            <Sphere radius = '0.25'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                        </Shape>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval = '1.5' loop = 'true'></TimeSensor> <!--Intervalo de tiempo para el movimiento del ojo-->
+
+                    <ScalarInterpolator DEF = 'coloring'
+                        key = '     0 0.25 0.5 0.75 1'
+                        keyValue = '0 0.5   1  0.5  0'>
+                    </ScalarInterpolator>
+
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'coloring' toField = 'set_fraction'></ROUTE>
+                    <!--Conexión entre el sensor de tiempo y el interpolador de color, algunas veces autocorrector de Copilot 
+                    cambia el campo fraction_changed a isActive en fromField, dejando de funcionar por completo-->
+                    <ROUTE fromNode = 'coloring' fromField = 'value_changed' toNode = 'transparente' toField = 'set_transparency'></ROUTE>
+                    <!--Conexión entre el interpolador de color y el objeto que se mueve-->
+
+
+                    <!--Ojo Satélite: vuelta completa alrededor del eye Y-->
+                    <Transform DEF = 'centro'>
+                        <Transform DEF = 'satelite' translation = '10 0 0'>
+                            <Shape>
+                                <Appearance>
+                                    <Material></Material>
+                                    <ImageTexture url = '"texturas/ojo.png"'></ImageTexture> <!--Imagen del ojo-->
+                                </Appearance>
+                                <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                            </Shape>
+                        </Transform>
+                    </Transform>
+
+                    <TimeSensor DEF = 'Timer' cycleInterval = '1.5' loop = 'true'></TimeSensor> <!--Intervalo de tiempo para el movimiento del ojo-->
+
+                    <OrientationInterpolator DEF = 'Rotacion'
+                        key = '        0        0.25        0.5           0.75         1'
+                        keyValue = '0 1 0 0  0 1 0 1.57  0 1 0 3.1415  0 1 0 -1.57  0 1 0 0 '>
+                    </OrientationInterpolator>
+                    <!--Valores de rotación del ojo, el eje Y es el eje de rotación, el ángulo es clave si se piensa implementar el cambio-->
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'Rotacion' toField = 'set_fraction'></ROUTE>
+                    <!--Conexión entre el sensor de tiempo y el interpolador de rotación-->
+                    <ROUTE fromNode = 'Rotacion' fromField = 'value_changed' toNode = 'satelite' toField = 'set_rotation'></ROUTE>
+                    <!--Conexión entre el interpolador de rotación y el objeto que se mueve-->
+
+                    <OrientationInterpolator DEF = 'Rotacion2'
+                        key = '        0        0.25        0.5           0.75         1'
+                        keyValue = '0 1 0 0  0 1 0 1.57  0 1 0 3.1415  0 1 0 -1.57  0 1 0 0'>
+                    </OrientationInterpolator>
+                    <!--Valores de rotación del ojo, el eje Y es el eje de rotación, el ángulo es clave si se piensa implementar el cambio-->
+                    <ROUTE fromNode = 'Timer' fromField = 'fraction_changed' toNode = 'Rotacion2' toField = 'set_fraction'></ROUTE>
+                    <!--Conexión entre el sensor de tiempo y el interpolador de rotación-->
+                    <ROUTE fromNode = 'Rotacion2' fromField = 'value_changed' toNode = 'centro' toField = 'set_rotation'></ROUTE>
+                    <!--Conexión entre el interpolador de rotación y el objeto que se mueve-->
+
+                </Scene>
+            </X3D>
+        </x3d-canvas>
+    </body>
+</html>

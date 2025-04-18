@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <Transform DEF = 'ojo'>
+                        <TouchSensor DEF = 'Touch' description = 'toca para parar'></TouchSensor>
+                        <Inline url = '"X3D/ojo.x3d"'></Inline>
+                    </Transform>
+
+                    <TimeSensor DEF = 'TimerOjo' loop = 'true'></TimeSensor>
+
+                    <OrientationInterpolator DEF = 'rotation' key = '0 0.25 0.5 0.75 1' keyValue = '0 1 0 0  0 1 0 0.5  0 1 0 0  0 1 0 -0.1  0 1 0 0'>
+                    </OrientationInterpolator>
+                    <!--Time Sensor genera eventos (fraction_changed) funcionando como ticks de reloj que se mandan a OrientationInterpolator, este último
+                    contiene una tabla con una serie de tiempos (key) y sus valores (keyValue) que forman parte del nodo a animar. Los tiempos en cuestión
+                    están normalizados de 0.0 a 1.0 (con una cota de 0.25 en las 5 mediciones). Cada keyValue se asocia a su tiempo correspondiente, aquí
+                    siguiendo los valores típicos de un campo de rotación de un nodo de Transformadas (x y z α). Una vez recibe el evento del sensor de tiempo
+                    (set_fraction), interpola los key value hacia el valor correspondiente de cada campo un tick de reloj y genera un evento (value_changed)
+                    que se le manda al nodo que se busca animar (aquí siendo la transformada definida como 'ojo'). Una vez recibe set_rotation, el campo dado
+                    se altera correspondientemente-->
+
+                    <ROUTE fromNode = 'Touch' fromField = 'touchTime' toNode = 'TimerOjo' toField = 'startTime'></ROUTE> <!--Toca para detenerse-->
+                    <ROUTE fromNode = 'TimerOjo' fromField = 'fraction_changed' toNode = 'rotation' toField = 'set_fraction'></ROUTE> <!--Reloj-->
+                    <ROUTE fromNode = 'rotation' fromField = 'value_changed' toNode = 'ojo' toField = 'set_rotation'></ROUTE> <!--Reloj a ojo-->
+                    <!--ROUTE fromNode = 'Touch' fromField = 'touchTime' toNode = 'TimerOjo' toField = 'startTime'></ROUTE--> 
+                    <!--Con esta última ruta no se detiene nunca, estando en constante giro-->
+                    
+                </Scene>
+            </X3D>
+        </x3d-canvas>
+    </body>
+</html>

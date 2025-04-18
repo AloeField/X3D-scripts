@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style> <!-- Cambia el tamaño del canvas -->
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Esfera-->
+                    <Transform translation = '0 1.25 0'>    <!--traslación para que la esfera quede encima del cono rojo-->
+                    <Shape>
+                        <Appearance>
+                            <Material diffuseColor='1 0 0'></Material> <!-- Color rojo -->
+                            <!-- OTRA MANERA: <Material DEF = 'Azul' diffuseColor '0 1 0'> </Material>-->
+                        </Appearance>
+                        <Sphere radius = '1'></Sphere>
+                    </Shape>
+                    </Transform>
+                    <!--Cono-->
+                    <Shape>
+                        <Appearance>
+                            <Material diffuseColor='1 0 0'></Material> <!-- Color rojo -->
+                            <!-- OTRA MANERA: <Material USE = 'Azul' </Material>-->
+                        </Appearance>
+                        <Cone height = '2' bottomRadius = '1' bottom = 'true'></Cone> <!-- Cono con altura 2 y radio de base 1, con cara de la base existente(true) -->
+                    </Shape>
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

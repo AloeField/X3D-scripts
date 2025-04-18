@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Esfera roja-->
+                    <Shape>
+                        <Appearance>
+                            <Material diffuseColor='1 0 0'></Material>
+                        </Appearance>
+                        <Sphere radius = '0.5'></Sphere> <!--Radio justo para que contenga los parámetros de la cara, según las especificaciones-->
+                    </Shape>
+
+                    <!--Cejas-->
+                    <Transform translation = '0 0.25 0.35'>
+                        <Shape>
+                            <Appearance>
+                                <Material diffuseColor='0.5 0.25 0'></Material> <!--Color marrón -->
+                            </Appearance>
+                            <Box size = '0.6 0.05 0.2'></Box>
+                        </Shape>
+                    </Transform>
+
+                    <!--Nariz-->
+                    <Transform translation = '0 0 0.5'>
+                        <Shape>
+                            <Appearance>
+                                <Material diffuseColor = '1 0 0.5'></Material> <!-- Color piel -->
+                            </Appearance>
+                            <Sphere radius = '0.09'></Sphere>
+                        </Shape>
+                    </Transform>
+
+                    <!--Boca-->
+                    <Transform translation ='0 -0.2 0.35' rotation = '1 0 0 2' scale = '3 1 1 '>    
+                    <!--Rotación para que la boca esté horizontal, ángulo 115º y escala el triple de X para anchura-->
+                        <Shape>
+                            <Appearance>
+                                <Material diffuseColor = '0 0 0'></Material> <!--Color negro-->
+                            </Appearance>
+                            <Cylinder height = '0.2' radius = '0.05' side = 'true'></Cylinder>
+                        </Shape>
+                    </Transform>
+
+                    <!--Ojos-->
+                    <Transform translation = '-0.1 0.15 0.4'>
+                        <Shape DEF = 'ojo'>
+                            <Appearance>
+                                <Material></Material>
+                                <ImageTexture url = '"texturas/ojo.png"'></ImageTexture>
+                            </Appearance>
+                            <Sphere radius = '0.09'></Sphere>
+                        </Shape>
+                    </Transform>
+                    <Transform translation = '0.1 0.15 0.4'>
+                        <Shape USE = 'ojo'></Shape>
+                    </Transform>
+
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

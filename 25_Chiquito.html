@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Esfera roja-->
+                    <Shape>
+                        <Appearance>
+                            <Material diffuseColor='1 0 0'></Material>
+                        </Appearance>
+                        <Sphere radius = '0.5'></Sphere> <!--radio que encierra todas las facciones faciales y hace que se representen sin problema-->
+                    </Shape>
+
+                    <!--Cejas-->
+                    <Transform translation = '0 0.25 0.35'>
+                        <Shape>
+                            <Appearance>
+                                <Material diffuseColor='0.5 0.25 0'></Material> <!--Color marrón -->
+                            </Appearance>
+                            <Box size = '0.6 0.05 0.2'></Box>
+                        </Shape>
+                    </Transform>
+
+                    <!--Nariz-->
+                    <Transform translation = '0 0 0.5'>
+                        <Shape>
+                            <Appearance>
+                                <Material diffuseColor = '1 0 0.5'></Material> <!-- Color piel -->
+                            </Appearance>
+                            <Sphere radius = '0.09'></Sphere>
+                        </Shape>
+                    </Transform>
+
+                    <!--Boca-->
+                    <TouchSensor DEF = 'pulsador'></TouchSensor> <!--Sensor táctil para detectar el clic del ratón-->
+                    <Transform translation ='0 -0.2 0.35' rotation = '1 0 0 2' scale = '3 1 1 '>    
+                    <!--Rotación para que la boca esté horizontal, ángulo 115º y escala el triple de X para anchura-->
+                        <Shape>
+                            <Appearance>
+                                <Material DEF = 'boquita' diffuseColor = '0 0 0'></Material> <!--Color negro-->
+                            </Appearance>
+                            <Cylinder height = '0.2' radius = '0.05' side = 'true'></Cylinder>
+                        </Shape>
+                    </Transform>
+
+                    <Script type = 'application/x-vrmlscript' DEF = 'movimiento' url = '"scripts/boca.js"'>
+                        <field accessType = 'inputOnly' name = 'estado' type = 'SFBool'> </field>
+                        <field accessType = 'outputOnly' name = 'matiz' type = 'SFMovement'> </field>
+                        <field accessType = 'initializeOnly' name = 'flag' type = 'SFBool'> </field>
+                    </Script>
+
+                    <ROUTE fromNode = 'pulsador' fromField = 'isActive' toNode = 'movimiento' toField = 'estado'></ROUTE>
+                    <ROUTE fromNode = 'movimiento' fromField = 'matiz' toNode = 'boquita' toField = 'diffuseColor'></ROUTE>
+
+                    <!--Ojos-->
+                    <Transform DEF = 'ojoAnimado' translation = '-0.1 0.15 0.38'>   <!--ojo izquierdo-->
+                        <Inline url = '"X3D/19_OjoAnimado.x3d"'></Inline>
+                    </Transform>
+                    <Transform DEF = 'ojoAnimado' translation = '0.1 0.15 0.38'>    <!--ojo derecho-->
+                        <Inline url = '"X3D/19_OjoAnimado.x3d"'></Inline>
+                    </Transform>
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

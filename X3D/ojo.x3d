@@ -1,0 +1,12 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<X3D profile = 'Immersive'>
+    <Scene>
+        <Shape>
+            <Appearance>
+                <Material> </Material>
+                <ImageTexture url = '"ojo.png"'> </ImageTexture>
+            </Appearance>
+            <Sphere radius = '0.09'> </Sphere>
+        </Shape>
+    </Scene>
+</X3D>

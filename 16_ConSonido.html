@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src ="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style> <!-- Cambia el tamaño del canvas -->
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <!--Añade punto de vista a la coordenada XYZ = 0,4,8...-->
+                    <Viewpoint description = 'a 8m' orientation = '1 0 0 -0.35' position = '0 4 8'></Viewpoint>
+                    <!--Añade fondo azul al canvas-->
+
+                    <!--Se añaden fuente de luz y nodo TouchSensor-->
+                    <PointLight DEF = 'Luz' color = '0.8 0.8 0.0' on ='false' location = '0 20 0'></PointLight>
+                    <TouchSensor DEF = 'Pulsador' description = 'Pulsa el tablero para encender luz'></TouchSensor>
+                    <ROUTE fromNode ='Pulsador' fromField = 'isActive' toNode = 'Luz' toField = 'on'></ROUTE>
+                    <!-- Se conecta el TouchSensor a la luz para encenderla al pulsar el tablero -->
+
+                    <!--Nodos añadidos de sonido cerca del origen de coordenadas, a partir de 5m saca atenuación y pasados los 10 ya no es audible-->
+                    <Sound location = '0 0 0' maxBack = '10' maxFront = '10' minBack ='5' minFront = '5'>
+                        <AudioClip DEF = 'Sonido' loop = 'false' url = '"sonidos/willow1.wav"'></AudioClip>
+                    </Sound>
+                    <ROUTE fromNode = 'Pulsador' fromField = 'touchTime' toNode = 'Sonido' toField = 'set_startTime'></ROUTE> 
+                    <!-- Se conecta el TouchSensor al AudioClip para que suene al pulsar el tablero -->
+
+                    <!-- -20º eje X, 20m altura (Y), 40m profundidad (Z)-->
+                    <Viewpoint description='vista panoramica' orientation='1 0 0 -0.35' position='0 20 40'></Viewpoint>
+                    <!--Traslación y anidación inline del fichero x3d-->
+                    <Transform translation ='0 1.25 0'> <!--Se sube peón de altura con tal de que se visibilice arrastarlo por el tablero-->
+                        <Transform DEF = 'Peon'>
+                            <Inline url = '"X3D/14_PeonRojoMovilXZ.x3d"'> </Inline> <!-- Peón rojo móvil en el eje XZ -->
+                        </Transform>
+                    </Transform>
+                    <!--Caja de dimensiones 20x20x0.5 (alto, largo y ancho)-->
+                    <Shape>
+                        <Appearance>
+                            <Material></Material>
+                        </Appearance>
+                        <Box size = '20 0.5 20'></Box> <!-- Cuadrado de ancho/largo 20m y grosor 0.5m-->
+                    </Shape>
+                </Scene>
+        </x3d-canvas>
+    </body>
+</html>

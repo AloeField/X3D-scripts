@@ -1,0 +1,12 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+    <X3D profile = 'Immersive'>
+        <Scene>
+            <SolidBackground color = '0 0 0'/>
+            <Viewpoint position = '0 0.5 3'/>
+            <Transform translation = '-2 0 2'> <Shape> <Text string '"+2"'/> </Shape> </Transform>
+            <Transform translation = '-1 0 1'> <Shape> <Text string '"+1"'/> </Shape> </Transform>
+            <Transform translation = '0 0 0'> <Shape> <Text string '"0"'/> </Shape> </Transform>
+            <Transform translation = '1 0 -1'> <Shape> <Text string '"-1"'/> </Shape> </Transform>
+            <Transform translation = '2 0 -2'> <Shape> <Text string '"-2"'/> </Shape> </Transform>
+        </Scene>
+    </X3D>

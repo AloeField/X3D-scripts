@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src = "https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+        <style> x3d-canvas {width: 400px; height: 200px}</style>
+    </head>
+    <body>
+        <x3d-canvas>
+            <X3D profile = 'Immersive'>
+                <Scene>
+                    <Viewpoint position = '0 5 8' orientation = '1 0 0 -0.35'></Viewpoint>
+                    <TouchSensor DEF = 'pulsador'></TouchSensor>
+
+                    <Shape>
+                        <Appearance>
+                            <Material DEF = 'mat'></Material>
+                        </Appearance>
+                        <Cylinder height = '0.5' radius = '0.5'></Cylinder> <!--Cilindro de altura y radio 0.5, no centrado en la pantalla-->
+                    </Shape>
+                    <Script type = 'application/x-vrmlscript' DEF ='conmutador' url = '"scripts/conmutador.js"'>
+                        <field accessType = 'inputOnly' name = 'estado' type = 'SFBool'></field>
+                        <field accessType = 'outputOnly' name = 'matiz' type = 'SFColor'></field>
+                        <field accessType = 'initializeOnly' name = 'flag' type = 'SFBool' value = 'false'></field>
+                    </Script>
+                    <!--Indica donde está el fichero del código con su url, y define qué campos tiene. Aquí siendo estado (entrada), matiz (salida)
+                    y flag (valor de inicialización)
+                    Dentro del fichero en JavaScript, solo hay una función que recibe el valor del campo estado. De ser true, la función pone al campo
+                    matiz a rojo (1 0 0) si estaba negro (0 0 1), o viceversa-->
+                    <ROUTE fromNode = 'pulsador' fromField = 'isActive' toNode = 'conmutador' toField = 'estado'></ROUTE>
+                    <ROUTE fromNode = 'conmutador' fromField = 'matiz' toNode = 'mat' toField = 'diffuseColor'></ROUTE>
+                    <!--En el enunciado originalmente se cambiaba a negro, lo que pasa que lo he decidido implementar en azul ya que era mucho más visible-->
+
+                </Scene>
+            </X3D>
+        </x3d-canvas>
+    </body>
+</html>
