@@ -1,0 +1,53 @@
+
+
+<!DOCTYPE html>
+   <html>
+      <head>
+          <meta charset="utf-8">
+          <title>My first three.js app</title>
+          <style>
+              body { margin: 0; }
+          </style>
+      </head>
+      <body>
+           <script src="js/three.js"></script>
+           <script>
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+                    const renderer = new THREE.WebGLRenderer();
+                    renderer.setSize( window.innerWidth, window.innerHeight );
+                    document.body.appendChild( renderer.domElement );
+
+                    const geometry = new THREE.BoxGeometry(1,1,1);
+                    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+                    const cube = new THREE.Mesh( geometry, material );
+                    scene.add( cube );
+
+                    camera.position.z = 5;
+
+                    function animate() {
+                          requestAnimationFrame( animate );
+
+                          cube.rotation.x += 0.01;
+                          cube.rotation.y += 0.01;
+
+                          renderer.render( scene, camera );
+                         };
+                        var light = new BABYLON.DirectionalLight("DirectionalLight", new BABYLON.Vector3(0, -1, 1), scene);
+                        light.intensity = 0.75;
+
+                        var box = BABYLON.MeshBuilder.CreateBox("box", { width: 1, height: 1, depth: 1 }, scene);
+                        var myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
+                        myMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
+                        box.material = myMaterial;
+
+                        engine.runRenderLoop(function () {
+                            box.rotation.x += 0.01;
+                            box.rotation.y += 0.01;
+                            scene.render();
+                        });
+                          animate();
+          </script>
+     </body>
+</html>

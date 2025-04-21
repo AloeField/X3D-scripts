@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+   <html>
+      <head>
+          <meta charset="utf-8">
+          <title>CruzGirando.js app</title>
+          <style>
+              body { margin: 0; }
+          </style>
+      </head>
+      <body>
+        <!--se halla dentro de un directorio local el archivo JavaScript, aunque lo típico es que esté en remoto (servidor)-->
+           <script src="js/three.js"></script>
+           <script>
+                    //sería más correcto decir que estos son nodos instanciados de clases
+                    const scene = new THREE.Scene();   //crea la escena, a la que anida la cámara definida por su FOV (campo de visión), razón de aspecto y planos de recorte cercano y lejano del frustrum
+                    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+                    //75º la razón de aspecto de la Ventana de Windows, planos de recorte y lejano son 0.1 y 1000 metros respectivamente. Se puede contar con varias cámaras a la vez
+                    const renderer = new THREE.WebGLRenderer(); //renderizado que va a operar en la escena (WebGL), al cual se le añade al HTML y de paso objetos 3D
+                    renderer.setSize( window.innerWidth, window.innerHeight );
+                    document.body.appendChild( renderer.domElement );
+
+                    //colores de los materiales
+                    const Gmaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+                    const Rmaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+                    
+                    //cubo verde
+                    const geometry = new THREE.BoxGeometry(1,2,1);
+                    const Gcube = new THREE.Mesh( geometry, Gmaterial );  //aquí los nodos son objetos que se le asignan colores en hexadecimal
+                    Gcube.rotation.z = Math.PI / 2; //rotación de 90º en el eje Z para que esté perpendicular al cubo verde
+                    scene.add(Gcube);
+
+                    //cubo rojo
+                    const geometry2 = new THREE.BoxGeometry(1,2,1);
+                    const Rcube = new THREE.Mesh( geometry2, Rmaterial);  //aquí los nodos son objetos que se le asignan colores en hexadecimal
+                    scene.add(Rcube);
+
+                    camera.position.z = 5;
+                    //el cubo se ubica por defecto en el origen de coordenadas, al estar la cámara allí, se desplaza 5 metros en dirección Z (eje de profundidad)
+
+                    function animate() {
+                          requestAnimationFrame( animate );
+
+                          Gcube.rotation.x += 0.01;
+                          Gcube.rotation.y += 0.01;
+
+                          Rcube.rotation.x += 0.01;             
+                          Rcube.rotation.y += 0.01;
+                         
+                        //así las rotaciones van de la mano y no ocurre ninguna deformación de la figura
+
+                          renderer.render( scene, camera );
+                         };
+                          animate();    //anima la escena completa en cuestión
+                          //bucle que renderiza la escena, cuenta como mínimo con requestAnimationFrame(animate) que renderiza la tasa de refresco
+                          //del display y renderer.render(scene,camera) para el propio renderizado. Todo lo que se vaya moviendo o cambie en la escena
+                          //irá especificado dentro de la función. Aquí son dos sentencias que modifican la orientación del cubo en eje x e y en cada frame
+          </script>
+     </body>
+</html>
